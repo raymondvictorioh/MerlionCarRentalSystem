@@ -6,12 +6,19 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.persistence.Column;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import javax.persistence.Temporal;
+
 
 /**
  *
@@ -21,36 +28,63 @@ import javax.persistence.OneToMany;
 public class Outlet implements Serializable {
 
     @OneToMany(mappedBy = "outlet")
-    private List<Car> cars;
+    private List<Employee> employees;
+
+    @OneToMany(mappedBy = "destinatedOutlet")
+    private List<TransitDispatchRecord> transitDispatchRecords;
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long outletId;
+    @Column(length = 50, nullable = false)
+    private String outletName;
+    @Column(length = 50, nullable = false)
+    private String outletAddress;
+    @Column(nullable = false)
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date openingTime;
+    @Column(nullable = false)
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date closingTime;
 
-    public Long getId() {
-        return id;
+    public Outlet() {
+        employees = new ArrayList<>();
+        transitDispatchRecords = new ArrayList<>();
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Outlet(String outletName, String outletAddress, Date openingTime, Date closingTime) {
+        this();
+        this.outletName = outletName;
+        this.outletAddress = outletAddress;
+        this.openingTime = openingTime;
+        this.closingTime = closingTime;
+    }
+    
+    
+    public Long getOutletId() {
+        return outletId;
+    }
+
+    public void setOutletId(Long outletId) {
+        this.outletId = outletId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (outletId != null ? outletId.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
+        // TODO: Warning - this method won't work in the case the outletId fields are not set
         if (!(object instanceof Outlet)) {
             return false;
         }
         Outlet other = (Outlet) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.outletId == null && other.outletId != null) || (this.outletId != null && !this.outletId.equals(other.outletId))) {
             return false;
         }
         return true;
@@ -58,7 +92,7 @@ public class Outlet implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Outlet[ id=" + id + " ]";
+        return "entity.Outlet[ id=" + outletId + " ]";
     }
     
 }

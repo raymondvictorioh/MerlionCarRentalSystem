@@ -11,24 +11,34 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
 
 /**
  *
- * @author raymond
+ * @author daniel
  */
-@Entity
-public class OwnCustomer extends Customer implements Serializable {
+@MappedSuperclass
+public class Customer implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerId;
+    @Column(length = 50, nullable = false)
+    private String name;
+    @ManyToOne
+    private Partner partner;
+    public Customer() {
+    }
 
-    public OwnCustomer() {
+    public Customer(String name) {
+        this();
+        this.name = name;
     }
     
     
-    @Override
+
     public Long getCustomerId() {
         return customerId;
     }
@@ -47,10 +57,10 @@ public class OwnCustomer extends Customer implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the customerId fields are not set
-        if (!(object instanceof OwnCustomer)) {
+        if (!(object instanceof Customer)) {
             return false;
         }
-        OwnCustomer other = (OwnCustomer) object;
+        Customer other = (Customer) object;
         if ((this.customerId == null && other.customerId != null) || (this.customerId != null && !this.customerId.equals(other.customerId))) {
             return false;
         }
@@ -59,7 +69,7 @@ public class OwnCustomer extends Customer implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.OwnCustomer[ id=" + customerId + " ]";
+        return "entity.Customer[ id=" + customerId + " ]";
     }
     
 }
