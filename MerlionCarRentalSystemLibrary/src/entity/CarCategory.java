@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +26,7 @@ public class CarCategory implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long categoryId;
     @Column(nullable=false)
     private String categoryName;
@@ -38,6 +39,17 @@ public class CarCategory implements Serializable {
     @OneToMany(mappedBy = "carCategory")
     private List<RentalReservation> reservations;
 
+    public CarCategory() {
+        rentalRates = new ArrayList<>();
+        models = new ArrayList<>();
+        reservations = new ArrayList<>();
+    }
+
+    public CarCategory(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    
     public Long getCategoryId() {
         return categoryId;
     }

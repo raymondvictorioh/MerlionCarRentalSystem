@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,7 +28,7 @@ public class CarModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long modelId;
      @Column(nullable=false)
     private String modelName;
@@ -40,6 +41,16 @@ public class CarModel implements Serializable {
     @OneToMany(mappedBy = "carModel")
     private List<RentalReservation> reservations;
 
+    public CarModel() {
+        reservations  = new ArrayList<>();
+        cars = new ArrayList<>();
+    }
+
+    public CarModel(String modelName) {
+        this.modelName = modelName;
+    }
+
+    
     public String getModelName() {
         return modelName;
     }
@@ -80,6 +91,48 @@ public class CarModel implements Serializable {
     @Override
     public String toString() {
         return "entity.CarModel[ id=" + modelId + " ]";
+    }
+
+    /**
+     * @return the carCategory
+     */
+    public CarCategory getCarCategory() {
+        return carCategory;
+    }
+
+    /**
+     * @param carCategory the carCategory to set
+     */
+    public void setCarCategory(CarCategory carCategory) {
+        this.carCategory = carCategory;
+    }
+
+    /**
+     * @return the cars
+     */
+    public List<Car> getCars() {
+        return cars;
+    }
+
+    /**
+     * @param cars the cars to set
+     */
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
+    }
+
+    /**
+     * @return the reservations
+     */
+    public List<RentalReservation> getReservations() {
+        return reservations;
+    }
+
+    /**
+     * @param reservations the reservations to set
+     */
+    public void setReservations(List<RentalReservation> reservations) {
+        this.reservations = reservations;
     }
     
 }

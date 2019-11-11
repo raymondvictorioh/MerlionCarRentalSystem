@@ -26,7 +26,7 @@ public class RentalRate implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rateId;
     @Column(nullable=false)
     private String rateName;
@@ -42,6 +42,16 @@ public class RentalRate implements Serializable {
     @JoinColumn(nullable=false)
     @ManyToOne(optional=false)
     private CarCategory carCategory;
+
+    public RentalRate(String rateName, BigDecimal ratePerDay, Date rateValidityStartDate, Date rateValidityEndDate) {
+        this.rateName = rateName;
+        this.ratePerDay = ratePerDay;
+        this.rateValidityStartDate = rateValidityStartDate;
+        this.rateValidityEndDate = rateValidityEndDate;
+    }
+
+    public RentalRate() {
+    }
     
 
     public Long getRateId() {

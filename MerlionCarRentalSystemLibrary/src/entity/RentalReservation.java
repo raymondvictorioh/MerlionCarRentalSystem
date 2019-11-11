@@ -29,7 +29,7 @@ public class RentalReservation implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reservationId;
     @Column(nullable=false)
     private BigDecimal totalAmount;
@@ -39,6 +39,9 @@ public class RentalReservation implements Serializable {
     @Column(nullable=false)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date rentalEndDate;
+    @Column(nullable=false)
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date paymentDate;
       
     private String creditCardCVVNumber;
     
